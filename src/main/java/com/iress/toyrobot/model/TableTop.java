@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @Builder
 public class TableTop {
-    private byte[] dimensions;
+    private int[] dimensions;
 }

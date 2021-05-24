@@ -1,15 +1,18 @@
 package com.iress.toyrobot.model;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
 public class ToyRobot implements Robot {
     private Direction direction;
 
-    private byte[] position = new byte[2];
+    private int[] position = new int[2];
 
     @Override
-    public void move(byte[] move) {
+    public void move(int[] move) {
         this.position[0] = (byte) (this.position[0] + move[0]);
         this.position[1] = (byte) (this.position[1] + move[1]);
     }
