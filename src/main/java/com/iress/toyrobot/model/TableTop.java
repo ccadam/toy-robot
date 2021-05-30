@@ -1,10 +1,17 @@
 package com.iress.toyrobot.model;
 
-import lombok.Builder;
-import lombok.Getter;
-
-@Getter
-@Builder
 public class TableTop {
-    private int[] dimensions;
+    private final int[] dimensions;
+
+    public TableTop(int x, int y) {
+        this.dimensions = new int[] { x, y };
+    }
+
+    public int[] getLowerLimit() {
+        return new int[] { 0, 0 };
+    }
+
+    public int[] getUpperLimit() {
+        return dimensions;
+    }
 }
