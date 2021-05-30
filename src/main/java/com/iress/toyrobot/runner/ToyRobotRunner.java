@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -20,7 +19,12 @@ public class ToyRobotRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws FileNotFoundException {
-        log.info("Greatings! Will now be reading instructions from file");
+        if (args.length < 1) {
+            log.error("No file provided for Toy Robot, exiting now! Goodbye");
+            System.exit(1);
+        }
+
+        log.info("Greetings from Toy Robot! Will now be reading instructions from file");
 
         String filePath = args[0];
 
@@ -32,8 +36,8 @@ public class ToyRobotRunner implements CommandLineRunner {
 
             issueCommandsToRobot(toyRobot, userInput);
         } catch (IOException e) {
-            log.warn("Error occurred whilst reading input: " + e.getMessage());
-            throw new FileNotFoundException("Error occurred whilst reading input");
+            log.warn("Error occurred whilst reading input, check whether file exists: " + e.getMessage());
+            throw new FileNotFoundException();
         }
     }
 
@@ -43,7 +47,6 @@ public class ToyRobotRunner implements CommandLineRunner {
 
     private void issueCommandsToRobot(ToyRobot toyRobot, Stream<String> userInput) {
         userInput.map(CommandMapper::mapUserInputToCommand)
-                .filter(Objects::nonNull)
                 .forEach(toyRobot::receiveCommand);
     }
 }

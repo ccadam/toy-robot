@@ -37,4 +37,10 @@ public class ToyRobotRunnerIT {
         toyRobotRunner.run("src/test/resources/exampleC.csv");
         assertTrue(capturedOutput.getOut().contains("3,3,NORTH"));
     }
+
+    @Test
+    void testRun_whenRunWithStress_shouldReturnExpectedResult(CapturedOutput capturedOutput) throws FileNotFoundException {
+        toyRobotRunner.run("src/test/resources/stressRobot.csv");
+        assertTrue(capturedOutput.getOut().contains("5,0,EAST"));
+    }
 }

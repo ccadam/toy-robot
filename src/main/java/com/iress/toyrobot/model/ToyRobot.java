@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Getter
-public class ToyRobot {
+public class ToyRobot implements Robot {
 
     private static final int moveUnit = 1;
 
@@ -26,10 +26,12 @@ public class ToyRobot {
         this.tableTop = tableTop;
     }
 
+    @Override
     public void receiveCommand(Command command) {
         command.apply(this);
     }
 
+    @Override
     public void apply(PlaceCommand command) {
         if (checkIsSafe(command.getPosition(), this.tableTop.getLowerLimit(), this.tableTop.getUpperLimit())) {
             this.direction = command.getDirection();
@@ -38,6 +40,7 @@ public class ToyRobot {
         }
     }
 
+    @Override
     public void apply(MoveCommand command) {
         if (isInitialised) {
             int[] addMove = MoveGenerator.generateMove(this.direction, moveUnit);
@@ -48,18 +51,21 @@ public class ToyRobot {
         }
     }
 
+    @Override
     public void apply(LeftCommand command) {
         if (isInitialised) {
             this.direction = direction.left();
         }
     }
 
+    @Override
     public void apply(RightCommand command) {
         if (isInitialised) {
             this.direction = direction.right();
         }
     }
 
+    @Override
     public void apply(ReportCommand command) {
         if (isInitialised) {
             log.info(String.format("Robot is currently at %s,%s,%s",
